@@ -19,6 +19,9 @@ echo ""
 # Navigate to project root
 cd /Users/ainexus/Task
 
+# Set Java 21 for tests (required for Mockito compatibility)
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home
+
 # Check prerequisites
 echo -e "${YELLOW}Checking prerequisites...${NC}"
 
@@ -32,7 +35,7 @@ if ! command -v mvn &> /dev/null; then
     exit 1
 fi
 
-echo -e "${GREEN}✅ Prerequisites OK${NC}"
+echo -e "${GREEN}✅ Prerequisites OK (Using Java 21)${NC}"
 echo ""
 
 # Clean previous build
