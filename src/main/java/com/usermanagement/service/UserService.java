@@ -4,6 +4,7 @@ import com.usermanagement.dto.UserDTO;
 import com.usermanagement.entity.User;
 import com.usermanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  * Handles user-related operations and implements UserDetailsService for Spring Security
  */
 @Service
+@Primary
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
