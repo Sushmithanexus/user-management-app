@@ -86,7 +86,7 @@ test.describe('Signup Flow', () => {
   });
 
   test('should have link to login page', async ({ page }) => {
-    const loginLink = page.locator('a:has-text("Login")');
+    const loginLink = page.locator('p a:has-text("Login")');
     await expect(loginLink).toBeVisible();
     await loginLink.click();
     await expect(page).toHaveURL(/.*login/);
