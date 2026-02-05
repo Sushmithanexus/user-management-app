@@ -25,7 +25,8 @@
       "Bash(git add:*)",
       "Bash(git push:*)",
       "Bash(java:*)",
-      "Bash(/usr/libexec/java_home:*)"
+      "Bash(/usr/libexec/java_home:*)",
+      "Bash(cat:*)"
     ]
   }
 }
