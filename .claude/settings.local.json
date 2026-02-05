@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn spring-boot:run:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill -9)",
+      "Bash(npm run playwright:install:*)",
+      "Bash(chmod:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(npm run test:e2e:isolated:*)",
+      "Bash(mvn test:*)",
+      "Bash(mvn clean test:*)",
+      "Bash(curl:*)",
+      "Bash(npm run test:e2e:mobile:*)",
+      "Bash(xargs cat:*)",
+      "Bash(npx playwright show-report:*)",
+      "Bash(npm run test:e2e:desktop-mobile:*)",
+      "Bash(tee:*)",
+      "Bash(git init:*)",
+      "Bash(gh auth status:*)"
+    ]
+  }
+}
