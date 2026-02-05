@@ -23,7 +23,9 @@
       "Bash(npm run test:e2e:*)",
       "Bash(ls:*)",
       "Bash(git add:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(java:*)",
+      "Bash(/usr/libexec/java_home:*)"
     ]
   }
 }
