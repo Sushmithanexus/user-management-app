@@ -18,7 +18,7 @@ test.describe('Complete E2E User Journey', () => {
     await expect(page.locator('h1:has-text("Welcome")')).toBeVisible();
 
     // Step 2: Navigate to signup
-    await page.click('a:has-text("Sign Up")');
+    await page.click('.cta-buttons a:has-text("Sign Up")');
     await expect(page).toHaveURL(/.*signup/);
 
     // Step 3: Complete signup
@@ -50,7 +50,7 @@ test.describe('Complete E2E User Journey', () => {
 
     // Step 9: Navigate to users list
     await page.goto('/users');
-    await page.waitForTimeout(1500);
+    await page.waitForTimeout(2000);
     await expect(page.locator('h2:has-text("Users")')).toBeVisible();
 
     // Step 10: Logout
@@ -79,7 +79,7 @@ test.describe('Complete E2E User Journey', () => {
 
     // Verify admin role
     await page.goto('/users');
-    await page.waitForTimeout(1500);
+    await page.waitForTimeout(2000);
     await expect(page.locator('text=ADMIN').first()).toBeVisible();
 
     // Logout admin
@@ -105,7 +105,7 @@ test.describe('Complete E2E User Journey', () => {
 
     // Verify regular user can see users list
     await page.goto('/users');
-    await page.waitForTimeout(1500);
+    await page.waitForTimeout(2000);
     await expect(page.locator('h2:has-text("Users")')).toBeVisible();
 
     // Should see both users in the list

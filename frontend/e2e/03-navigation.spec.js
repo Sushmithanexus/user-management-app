@@ -17,13 +17,13 @@ test.describe('Navigation', () => {
 
   test('should navigate to signup page', async ({ page }) => {
     await page.goto('/');
-    await page.click('a:has-text("Sign Up")');
+    await page.click('.cta-buttons a:has-text("Sign Up")');
     await expect(page).toHaveURL(/.*signup/);
   });
 
   test('should navigate to login page', async ({ page }) => {
     await page.goto('/');
-    await page.click('a:has-text("Login")');
+    await page.click('.cta-buttons a:has-text("Login")');
     await expect(page).toHaveURL(/.*login/);
   });
 

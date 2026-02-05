@@ -22,7 +22,8 @@
       "Bash(gh repo create:*)",
       "Bash(npm run test:e2e:*)",
       "Bash(ls:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git push:*)"
     ]
   }
 }

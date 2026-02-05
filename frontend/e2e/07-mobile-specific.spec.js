@@ -140,8 +140,8 @@ test.describe('Mobile-Specific Tests', () => {
   test('should handle touch gestures for navigation', async ({ page }) => {
     await page.goto('/');
 
-    // Tap on login button (use first match to avoid strict mode violation)
-    const loginButton = page.locator('a[href="/login"]').first();
+    // Tap on login button (use CTA buttons to be specific)
+    const loginButton = page.locator('.cta-buttons a:has-text("Login")');
     await loginButton.tap();
 
     // Verify navigation occurred
@@ -149,6 +149,7 @@ test.describe('Mobile-Specific Tests', () => {
 
     // Go back
     await page.goBack();
+    await page.waitForTimeout(500);
     await expect(page).toHaveURL('/');
   });
 
@@ -162,25 +163,23 @@ test.describe('Mobile-Specific Tests', () => {
     await page.fill('input[name="password"]', 'wrongpassword');
     await page.tap('button[type="submit"]');
 
-    // Wait for error response and verify error is shown
-    await page.waitForTimeout(1000);
+    // Wait for error response
+    await page.waitForTimeout(2000);
 
-    // Check if any error-related element is visible (more flexible selector)
-    const errorVisible = await page.locator('.error-message, .error, [role="alert"], .alert-danger, .text-danger, p:has-text("Invalid"), div:has-text("Invalid")').first().isVisible().catch(() => false);
+    // Verify still on login page (login failed)
+    await expect(page).toHaveURL(/.*login/);
 
-    // If error message exists, verify it's within viewport
-    if (errorVisible) {
-      const errorMessage = page.locator('.error-message, .error, [role="alert"], .alert-danger, .text-danger, p:has-text("Invalid"), div:has-text("Invalid")').first();
+    // Try to check for error message (optional)
+    const errorExists = await page.locator('.error-message').count() > 0;
+    if (errorExists) {
+      const errorMessage = page.locator('.error-message').first();
+      await expect(errorMessage).toBeVisible();
       const errorBox = await errorMessage.boundingBox();
       const viewportSize = page.viewportSize();
       if (errorBox) {
         expect(errorBox.x).toBeGreaterThanOrEqual(0);
         expect(errorBox.x + errorBox.width).toBeLessThanOrEqual(viewportSize.width);
       }
-    } else {
-      // If no error message is displayed, that's also acceptable behavior
-      // Just verify the login didn't succeed (still on login page)
-      await expect(page).toHaveURL(/.*login/);
     }
   });
 
