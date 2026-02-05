@@ -9,8 +9,9 @@ test.use({
 
 test.describe('Mobile-Specific Tests', () => {
   test.beforeEach(async ({ page }, testInfo) => {
-    // Skip if not a mobile project
-    if (!testInfo.project.name.includes('mobile')) {
+    // Only skip if viewport width is greater than tablet size
+    const viewport = page.viewportSize();
+    if (viewport && viewport.width > 1024) {
       test.skip();
     }
     await page.goto('/');
