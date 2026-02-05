@@ -17,6 +17,36 @@ RED='\033[0;31m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+# Check prerequisites
+echo -e "${YELLOW}Checking prerequisites...${NC}"
+
+# Check Java
+if ! command -v java &> /dev/null; then
+    echo -e "${RED}❌ Java is not installed${NC}"
+    exit 1
+fi
+
+# Check Maven
+if ! command -v mvn &> /dev/null; then
+    echo -e "${RED}❌ Maven is not installed${NC}"
+    exit 1
+fi
+
+# Check Node
+if ! command -v node &> /dev/null; then
+    echo -e "${RED}❌ Node.js is not installed${NC}"
+    exit 1
+fi
+
+# Check npm
+if ! command -v npm &> /dev/null; then
+    echo -e "${RED}❌ npm is not installed${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}✅ All prerequisites installed${NC}"
+echo ""
+
 # Step 1: Backend Unit + Integration Tests
 echo -e "${YELLOW}Step 1/3: Running Backend Tests (JUnit5 + Spring)${NC}"
 echo "========================================="

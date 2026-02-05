@@ -83,7 +83,7 @@ test.describe('Signup Flow', () => {
   });
 
   test('should have link to login page', async ({ page }) => {
-    const loginLink = page.locator('p a:has-text("Login")').last();
+    const loginLink = page.locator('a:has-text("Login")');
     await expect(loginLink).toBeVisible();
     await loginLink.click();
     await expect(page).toHaveURL(/.*login/);
@@ -91,6 +91,7 @@ test.describe('Signup Flow', () => {
 
   test('should validate required fields', async ({ page }) => {
     await page.click('button[type="submit"]');
-    await expect(page.locator('.error-message:has-text("required")')).toBeVisible();
+    await expect(page.locator('.error-message')).toBeVisible();
+    await expect(page.locator('.error-message')).toContainText('required');
   });
 });
