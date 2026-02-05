@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -30,7 +31,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Unit Tests for UserController
  * Tests REST API endpoints with mocked services
  */
-@WebMvcTest(UserController.class)
+@WebMvcTest(controllers = UserController.class,
+    excludeAutoConfiguration = org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration.class)
+@Import(com.usermanagement.config.SecurityConfig.class)
 @DisplayName("UserController Unit Tests")
 class UserControllerTest {
 
