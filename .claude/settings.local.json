@@ -27,7 +27,8 @@
       "Bash(java:*)",
       "Bash(/usr/libexec/java_home:*)",
       "Bash(cat:*)",
-      "Bash(JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home mvn clean test:*)"
+      "Bash(JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home mvn clean test:*)",
+      "Bash(JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home mvn test:*)"
     ]
   }
 }

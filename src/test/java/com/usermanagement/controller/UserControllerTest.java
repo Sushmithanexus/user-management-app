@@ -33,7 +33,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @WebMvcTest(controllers = UserController.class,
     excludeAutoConfiguration = org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration.class)
-@Import(com.usermanagement.config.SecurityConfig.class)
 @DisplayName("UserController Unit Tests")
 class UserControllerTest {
 
@@ -48,6 +47,12 @@ class UserControllerTest {
 
     @MockBean
     private JwtUtil jwtUtil;
+
+    @MockBean
+    private com.usermanagement.config.SecurityConfig securityConfig;
+
+    @MockBean
+    private com.usermanagement.config.JwtAuthenticationFilter jwtAuthenticationFilter;
 
     private User testUser;
     private UserDTO testUserDTO;
