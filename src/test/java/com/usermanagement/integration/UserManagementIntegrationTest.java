@@ -396,10 +396,9 @@ class UserManagementIntegrationTest {
                 .content(objectMapper.writeValueAsString(updateData)))
                 .andExpect(status().isOk());
 
-        // 5. Delete own account
+        // 5. Attempt to delete own account - forbidden for all users (only admin can delete, but not own account)
         mockMvc.perform(delete("/api/users/" + userId)
                 .header("Authorization", "Bearer " + token))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("User deleted successfully"));
+                .andExpect(status().isForbidden());
     }
 }

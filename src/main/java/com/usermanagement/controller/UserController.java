@@ -127,16 +127,17 @@ public class UserController {
 
     /**
      * PUT /api/users/{id} - Update user (authenticated)
+     * ADMIN can update any user. Regular users can only update their own profile.
      */
     @PutMapping("/users/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
         try {
-            // Verify user is updating their own profile
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String currentUsername = authentication.getName();
             User currentUser = userService.getUserByUsername(currentUsername);
 
-            if (!currentUser.getId().equals(id)) {
+            // Regular users can only update their own profile
+            if (!"ADMIN".equals(currentUser.getRole()) && !currentUser.getId().equals(id)) {
                 Map<String, String> error = new HashMap<>();
                 error.put("error", "You can only update your own profile");
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
@@ -159,26 +160,29 @@ public class UserController {
 
     /**
      * DELETE /api/users/{id} - Delete user (authenticated)
-     * ADMIN can delete any user, regular users can only delete their own account
+     * Only ADMIN can delete users. ADMIN cannot delete their own account.
+     * Regular users cannot delete any account.
      */
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
-            // Get current authenticated user
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String currentUsername = authentication.getName();
             User currentUser = userService.getUserByUsername(currentUsername);
 
-            // Check authorization
+            // Only ADMIN can delete users
             if (!"ADMIN".equals(currentUser.getRole())) {
-                // Regular user can only delete their own account
-                if (!currentUser.getId().equals(id)) {
-                    Map<String, String> error = new HashMap<>();
-                    error.put("error", "You can only delete your own account");
-                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
-                }
+                Map<String, String> error = new HashMap<>();
+                error.put("error", "Only admins can delete accounts");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
             }
-            // ADMIN can delete any user (no additional check needed)
+
+            // ADMIN cannot delete their own account
+            if (currentUser.getId().equals(id)) {
+                Map<String, String> error = new HashMap<>();
+                error.put("error", "Admin cannot delete their own account");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+            }
 
             userService.deleteUser(id);
             Map<String, String> response = new HashMap<>();

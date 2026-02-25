@@ -262,18 +262,17 @@ class UserControllerTest {
 
     @Test
     @WithMockUser(username = "testuser")
-    @DisplayName("Should delete own account as regular user")
-    void testDeleteUser_OwnAccount_Success() throws Exception {
+    @DisplayName("Should not allow regular user to delete their own account")
+    void testDeleteUser_OwnAccount_Forbidden() throws Exception {
         // Arrange
         when(userService.getUserByUsername("testuser")).thenReturn(testUser);
-        doNothing().when(userService).deleteUser(1L);
 
         // Act & Assert
         mockMvc.perform(delete("/api/users/1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("User deleted successfully"));
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.error").value("Only admins can delete accounts"));
 
-        verify(userService).deleteUser(1L);
+        verify(userService, never()).deleteUser(1L);
     }
 
     @Test
@@ -286,8 +285,28 @@ class UserControllerTest {
         // Act & Assert
         mockMvc.perform(delete("/api/users/2"))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.error").value("You can only delete your own account"));
+                .andExpect(jsonPath("$.error").value("Only admins can delete accounts"));
 
         verify(userService, never()).deleteUser(2L);
+    }
+
+    @Test
+    @WithMockUser(username = "testuser", roles = "ADMIN")
+    @DisplayName("Should not allow admin to delete their own account")
+    void testDeleteUser_AdminOwnAccount_Forbidden() throws Exception {
+        // Arrange
+        User adminUser = new User();
+        adminUser.setId(1L);
+        adminUser.setUsername("testuser");
+        adminUser.setRole("ADMIN");
+
+        when(userService.getUserByUsername("testuser")).thenReturn(adminUser);
+
+        // Act & Assert
+        mockMvc.perform(delete("/api/users/1"))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.error").value("Admin cannot delete their own account"));
+
+        verify(userService, never()).deleteUser(1L);
     }
 }
