@@ -28,7 +28,18 @@
       "Bash(/usr/libexec/java_home:*)",
       "Bash(cat:*)",
       "Bash(JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home mvn clean test:*)",
-      "Bash(JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home mvn test:*)"
+      "Bash(JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home mvn test:*)",
+      "Bash(mvn:*)",
+      "Bash(pkill:*)",
+      "Bash(open:*)",
+      "Bash(npx bmad-method:*)",
+      "Bash(test:*)",
+      "Bash(tail:*)",
+      "Bash(npx tsc:*)",
+      "Bash(node_modules/.bin/tsc:*)",
+      "Bash(node_modules/.bin/jest:*)",
+      "Bash(head:*)",
+      "Bash(git checkout:*)"
     ]
   }
 }
